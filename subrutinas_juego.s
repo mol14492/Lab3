@@ -307,6 +307,11 @@ borrarAbajo:
     b loop
     
 
+paso:
+
+    add pasoActual,#1
+    cmp pasoActual,#3
+    moveq pasoActual,#0
 
 
 pop {pc}
@@ -406,3 +411,6 @@ noDraw$:
     .unreq contw
 
 
+
+
+    
