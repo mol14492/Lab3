@@ -1,13 +1,109 @@
 @@ Subrutina Choco
 @@ r0 - x
 @@ r1 - y
-@@ r2 - 
-@@ Eata subrutina determina si el personaje choca con las paredes
+@@ r2 - nivel 
+@@ Eata subrutina determina si el personaje choca con las paredes, 
 
 push {lr}
 
+    azul .req r10
+    x .req r0
+    y .req r1
+    color .req r3
+    pixel .req r4
+    respuesta .req r8
+    
+    ldr azul,=33
+    
+    teq r2,#1
+    ldreq r9, =nivel1
+    
+    teq r2,#2
+    ldreq r9, =nivel2
+    
+    mov respuesta,#0
+    
+    ldr r6,=1024
+    mov r7,r2
+    
+@@ Cargamos las esquinas del personaje y las omparamos @@
 
+@@ Esquina 1
 
+    mov r5,nivel
+    mul pixel,y,r6
+    add pixel,x
+    mul pixel,r7
+    
+    ldrh color,[r5,pixel]
+    
+    @@ Miramos si choco
+
+    teq color,#0
+    moveq respuesta,#1
+    teq color, azul
+    moveq respuesta ,#2
+
+@@ Esquina 2
+    
+    add x,#100
+    
+    mov r5,nivel
+    mul pixel,y,r6
+    add pixel,x
+    mul pixel,r7
+    
+    ldrh color,[r5,pixel]
+    
+    @@ Miramos si choco
+
+    teq color,#0
+    moveq respuesta,#1
+    teq color, azul
+    moveq respuesta ,#2
+
+@@ Esquina 3
+
+    add y,#100
+    mov r5,nivel
+    mul pixel,y,r6
+    add pixel,x
+    mul pixel,r7
+    
+    ldrh color,[r5,pixel]
+    
+    @@ MIramos si choco
+    
+    teq color,#0
+    moveq respuesta,#1
+    teq color,azul
+    moveq respuesta,#2
+    
+@@ Esquina 4
+
+    sub x,#100
+    
+    mov r5,nivel
+    mul pixel,y,r6
+    add pixel,x
+    mul pixel,r7
+    
+    ldrh color,[r5,pixel]
+    
+    teq color,#0
+    moveq respuesta,#1
+    teq color,azul
+    moveq respuesta,#2
+    
+    mov r0,respuesta
+    
+    .unreq x
+    .unreq y
+    .unreq pixel
+    .unreq color
+    .unreq nivel
+    .unreq respuesta
+    
 
 pop {pc}
 
@@ -307,13 +403,12 @@ borrarAbajo:
     b loop
     
 
-paso:
+pasos:
 
     add pasoActual,#1
     cmp pasoActual,#3
     moveq pasoActual,#0
-
-
+    
 pop {pc}
 
 
